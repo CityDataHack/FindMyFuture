@@ -280,6 +280,8 @@ $(document).ready(function() {
 			}
 			return sizeDefault;
 		}})
+		.attr({"stroke":"#555"})
+		.attr({"stroke-width":"1"})
 		.style("fill",function(d,i){
 			if ("colorWeight" in d) {
 				return getColorByScore(d["colorWeight"] * colorPriority * slider3.value);
@@ -292,9 +294,12 @@ $(document).ready(function() {
 		.data(dataset.nodes)
 		.enter()
 		.append("text")
-		.attr({"x":function(d){return d.x;},
+		.attr({
+			"x":function(d){return d.x;},
 			"y":function(d){return d.y;},
-			"class":"nodelabel smallfont"})
+			"text-anchor":"middle",
+			"class":"nodelabel smallfont"
+		})
 		.text(function(d){return d.name;});
 
 	var edgepaths = svg.selectAll(".edgepath")
