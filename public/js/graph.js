@@ -326,6 +326,19 @@ $(document).ready(function() {
 		.attr('fill', '#ccc')
 		.attr('stroke','#ccc');
 
+	var calculateColor = function(node) {
+		if ("colorWeight" in node) {
+			return getColorByScore(node["colorWeight"] * colorPriority * slider3.value);
+		}
+
+		return colors(i);
+	};
+	var calculateSize = function(node) {
+		if ("sizeWeight" in node) {
+			return node["sizeWeight"] * sizePriority * sizeDefault * (1/100)*slider1.value;
+		}
+		return sizeDefault;
+	};
 
 	force.on("tick", function(){
 		edges.attr({
@@ -339,17 +352,11 @@ $(document).ready(function() {
 			"cx":function(d){return d.x;},
 			"cy":function(d){return d.y;},
 			"r":function(d,i) {
-				if ("sizeWeight" in d) {
-					return d["sizeWeight"] * sizePriority * sizeDefault * (1/100)*slider1.value;
-				}
-				return sizeDefault;
+				return calculateSize(d);
 			}
 		})
 		.style("fill",function(d,i){
-			if ("colorWeight" in d) {
-				return getColorByScore(d["colorWeight"] * colorPriority * slider3.value);
-			}
-			return colors(i);
+			return calculateColor(d);
 		});
 
 		nodelabels.attr("x", function(d) { return d.x; })
@@ -374,18 +381,12 @@ $(document).ready(function() {
 			"cx":function(d){return d.x;},
 			"cy":function(d){return d.y;},
 			"r":function(d,i) {
-				if ("sizeWeight" in d) {
-					return d["sizeWeight"] * sizePriority * sizeDefault * (1/100)*slider1.value;
-				}
-				return sizeDefault;
+				return calculateSize(d);
 			}
 		})
-			.style("fill",function(d,i){
-				if ("colorWeight" in d) {
-					return getColorByScore(d["colorWeight"] * colorPriority * slider3.value);
-				}
-				return colors(i);
-			});
+		.style("fill",function(d,i){
+			return calculateColor(d);
+		});
 
 		nodelabels.attr("x", function(d) { return d.x; })
 			.attr("y", function(d) { return d.y; });
