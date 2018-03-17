@@ -288,13 +288,6 @@ $(document).ready(function() {
 		})
 		.call(force.drag)
 
-	// for (var i=0; i<nodes[0].length; i++) {
-	// 	debugger;
-	// 	// nodes[0][i].attr({"r":40})
-	// 	nodes[0][i].selectAll("circle").addClass("bla");
-	// }
-
-
 	var nodelabels = svg.selectAll(".nodelabel")
 		.data(dataset.nodes)
 		.enter()
