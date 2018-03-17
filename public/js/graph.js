@@ -243,16 +243,18 @@ $(document).ready(function() {
 
 	var svg = d3.select(".graphvisuals").append("svg").attr({"width":w,"height":h});
 
+	var linkDistanceFunc = function(d, i) {
+		if ("distanceWeight" in d.source) {
+			return [d.source["distanceWeight"] * distancePriority * distanceDefault * (1/100)*slider4.value]
+		}
+		return [distanceDefault]
+	};
+
 	var force = d3.layout.force()
 		.nodes(dataset.nodes)
 		.links(dataset.edges)
 		.size([w,h])
-		.linkDistance(function(d, i) {
-			if ("distanceWeight" in d.source) {
-				return [d.source["distanceWeight"] * distancePriority * distanceDefault]
-			}
-			return [distanceDefault]
-		})
+		.linkDistance(linkDistanceFunc)
 		.charge([-500])
 		.theta(0.1)
 		.gravity(0.05)
@@ -333,7 +335,6 @@ $(document).ready(function() {
 
 
 	force.on("tick", function(){
-
 		edges.attr({
 			"x1": function(d){return d.source.x;},
 			"y1": function(d){return d.source.y;},
@@ -368,6 +369,7 @@ $(document).ready(function() {
 	});
 
 	setInterval(function(){
+
 		edges.attr({
 			"x1": function(d){return d.source.x;},
 			"y1": function(d){return d.source.y;},
