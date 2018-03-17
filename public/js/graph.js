@@ -32,6 +32,7 @@ $(document).ready(function() {
 
 
 	function getColorByScore(val) {
+		var r, g, b;
 		if (val <= 50)
 		{
 			r = Math.floor((255 * (val / 50))),
@@ -41,9 +42,17 @@ $(document).ready(function() {
 		else
 		{
 			r = 255,
-			g = Math.floor((100 - val) / 50 * 255),
-			b = Math.floor((100 - val) / 50 * 255);
+				g = Math.floor((100 - val) / 50 * 255),
+				b = Math.floor((100 - val) / 50 * 255);
 		}
+		return rgbToHex(r,g,b);
+	}
+	function rgbToHex(r, g, b) {
+		return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+	}
+	function componentToHex(c) {
+		var hex = c.toString(16);
+		return hex.length == 1 ? "0" + hex : hex;
 	}
 
 	//
