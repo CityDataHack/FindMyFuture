@@ -32,19 +32,18 @@ $(document).ready(function() {
 
 
 	function getColorByScore(val) {
-		val = 100-val;
 		var r, g, b;
 		if (val <= 50)
 		{
 			r = Math.floor((255 * (val / 50))),
 			g = 255,
-			b = Math.floor((255 * (val / 50)));
+			b = 0
 		}
 		else
 		{
 			r = 255,
 			g = Math.floor((100 - val) / 50 * 255),
-			b = Math.floor((100 - val) / 50 * 255);
+			b = 0
 		}
 		return rgbToHex(r,g,b);
 	}
