@@ -37,14 +37,14 @@ $(document).ready(function() {
 		if (val <= 50)
 		{
 			r = Math.floor((255 * (val / 50))),
-				g = 255,
-				b = Math.floor((255 * (val / 50)));
+			g = 255,
+			b = Math.floor((255 * (val / 50)));
 		}
 		else
 		{
 			r = 255,
-				g = Math.floor((100 - val) / 50 * 255),
-				b = Math.floor((100 - val) / 50 * 255);
+			g = Math.floor((100 - val) / 50 * 255),
+			b = Math.floor((100 - val) / 50 * 255);
 		}
 		return rgbToHex(r,g,b);
 	}
@@ -84,7 +84,7 @@ $(document).ready(function() {
 			{
 				name:"Doctor",
 				sizeWeight:0.8,
-				colorWeight:0.1,
+				colorWeight:1,
 				distanceWeight:1.2
 			},
 			{
@@ -96,55 +96,55 @@ $(document).ready(function() {
 			{
 				name:"Surgeon",
 				sizeWeight:1.8,
-				colorWeight:0.1,
+				colorWeight:0.8,
 				distanceWeight:1.4
 			},
 			{
 				name:"Radiologist",
 				sizeWeight:0.4,
-				colorWeight:0.1,
+				colorWeight:0.9,
 				distanceWeight:1.4
 			},
 			{
 				name:"Dentist",
 				sizeWeight:0.5,
-				colorWeight:0.1,
+				colorWeight:0.5,
 				distanceWeight:1.1
 			},
 			{
 				name:"Anesthesiologist",
 				sizeWeight:2.6,
-				colorWeight:0.1,
+				colorWeight:0.4,
 				distanceWeight:1
 			},
 			{
 				name:"Hospital Porter",
 				sizeWeight:3.8,
-				colorWeight:0.1,
+				colorWeight:0.2,
 				distanceWeight:1
 			},
 			{
 				name:"Hospital Cleaner",
 				sizeWeight:0.1,
-				colorWeight:0.1,
+				colorWeight:1.1,
 				distanceWeight:0.6
 			},
 			{
 				name:"Medical Receptionist",
 				sizeWeight:1.1,
-				colorWeight:0.1,
+				colorWeight:1.4,
 				distanceWeight:0.65
 			},
 			{
 				name:"Medical Writer",
 				sizeWeight:0.7,
-				colorWeight:0.1,
+				colorWeight:1.7,
 				distanceWeight:1.3
 			},
 			{
 				name:"Medical Researcher",
 				sizeWeight:2.0,
-				colorWeight:0.1,
+				colorWeight:1.3,
 				distanceWeight:1.1
 			},
 			{
@@ -162,13 +162,13 @@ $(document).ready(function() {
 			{
 				name:"Audiologist",
 				sizeWeight:0.8,
-				colorWeight:0.1,
+				colorWeight:0.8,
 				distanceWeight:1.2
 			},
 			{
 				name:"Phlebotomist",
 				sizeWeight:1.2,
-				colorWeight:0.1,
+				colorWeight:0.6,
 				distanceWeight:0.9
 			},
 
@@ -275,11 +275,16 @@ $(document).ready(function() {
 		.append("circle")
 		.attr({"r":function(d,i) {
 			if ("sizeWeight" in d) {
-				return d["sizeWeight"] * sizePriority * sizeDefault;
+				return d["sizeWeight"] * sizePriority * sizeDefault * (1/100)*slider1.value;
 			}
 			return sizeDefault;
 		}})
-		.style("fill",function(d,i){return colors(i);})
+		.style("fill",function(d,i){
+			if ("colorWeight" in d) {
+				return getColorByScore(d["colorWeight"] * colorPriority * slider3.value);
+			}
+			return colors(i);
+		})
 		.call(force.drag)
 
 	// for (var i=0; i<nodes[0].length; i++) {
@@ -340,9 +345,18 @@ $(document).ready(function() {
 		nodes.attr({
 			"cx":function(d){return d.x;},
 			"cy":function(d){return d.y;},
-			"r":function(d) {
-				return slider1.value;
+			"r":function(d,i) {
+				if ("sizeWeight" in d) {
+					return d["sizeWeight"] * sizePriority * sizeDefault * (1/100)*slider1.value;
+				}
+				return sizeDefault;
 			}
+		})
+		.style("fill",function(d,i){
+			if ("colorWeight" in d) {
+				return getColorByScore(d["colorWeight"] * colorPriority * slider3.value);
+			}
+			return colors(i);
 		});
 
 		nodelabels.attr("x", function(d) { return d.x; })
@@ -353,4 +367,37 @@ $(document).ready(function() {
 			return path});
 
 	});
+
+	setInterval(function(){
+		edges.attr({
+			"x1": function(d){return d.source.x;},
+			"y1": function(d){return d.source.y;},
+			"x2": function(d){return d.target.x;},
+			"y2": function(d){return d.target.y;},
+		});
+
+		nodes.attr({
+			"cx":function(d){return d.x;},
+			"cy":function(d){return d.y;},
+			"r":function(d,i) {
+				if ("sizeWeight" in d) {
+					return d["sizeWeight"] * sizePriority * sizeDefault * (1/100)*slider1.value;
+				}
+				return sizeDefault;
+			}
+		})
+			.style("fill",function(d,i){
+				if ("colorWeight" in d) {
+					return getColorByScore(d["colorWeight"] * colorPriority * slider3.value);
+				}
+				return colors(i);
+			});
+
+		nodelabels.attr("x", function(d) { return d.x; })
+			.attr("y", function(d) { return d.y; });
+
+		edgepaths.attr('d', function(d) { var path='M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x + ' ' + d.target.y;
+			//console.log(d)
+			return path});
+	}, 25)
 });
