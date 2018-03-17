@@ -32,6 +32,7 @@ $(document).ready(function() {
 
 
 	function getColorByScore(val) {
+		val = 100-val;
 		var r, g, b;
 		if (val <= 50)
 		{
