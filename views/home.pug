@@ -1,80 +1,34 @@
 extends layout
 
 block content
-  h1 Find My Future
-  p.lead A site for young people.
-  hr
-  .row
+  .row.mts
     .col-sm-1
       img(width="80" src="https://ae01.alicdn.com/kf/HTB1VX8mQpXXXXaGXXXXq6xXFXXXc/Waterproof-Temporary-Fake-Tattoo-Stickers-Sexy-Red-Orange-Fox-Leaf-Cartoon-Design-Body-Art-Make-Up.jpg_640x640.jpg" alt="Cartoon Fox")
     .col-sm-11
-      h2 Task & Brainstorm
-    .col-sm-1
-
-    .col-sm-11
-      ul
-        li do something for young people & young people in vocational career pathways
-        li create something like UCAS
-        li look at websites to find bunch of data
-        li look at all the links we have been provided
-        li look at eurostat (shows very few countries have statistics on this thing)
-        li all we want is: website that has a list of common vocational qualifications people can take
-        li if somebody goes on the website, they'll see different sections / areas they can click on (see examples below)
-        li clicking on this section gives list of professions within this section and provides details, work experience, statistics, how many people that successfully completed this qualification get employed within x time
-        li people are at different stages of life, GCSE / Pre-Uni etc., which has to be separated
-        li add search bar
+      h1 Find My Future
+      p.lead A site for young people.
   hr
-  .row
-    .col-sm-3
-      h2 Priorities & Filters
-      .slidecontainer
-        .h4.mts Feature 1
-          span#spiderSpan1
-        input.slider.mbs#slider1(type="range" min="1" max="100" value="50")
 
-        .h4 UCAS Points
-          span#spiderSpan2
-        input.slider.mbs#slider2(type="range" min="72" max="144" value="50")
+  .h2 Career Areas
 
-        .h4 Feature 3
-          span#spiderSpan3
-        input.slider.mbs#slider3(type="range" min="1" max="100" value="50")
-
-        .h4 Feature 4
-          span#spiderSpan4
-        input.slider.mbs#slider4(type="range" min="1" max="100" value="50")
-
-        .h4 Feature 5
-          span#spiderSpan5
-        input.slider.mbs#slider5(type="range" min="1" max="100" value="50")
-
-        .h4 Feature 6
-        select.optionpicker.mbs
-          option(value="aa") aa
-          option(value="bb") bb
-          option(value="cc") cc
-
-    .col-sm-9
-      .graphvisuals(style="background-image:url('/rings.png'); background-position:center; background-position-x: 115px; background-repeat:no-repeat")
-  hr
   .row
     .col-sm-6
-      h2 Science & Engineering
+      h3 Science & Engineering
       p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
       p
         a.btn.btn-default(href='#', role='button') View details »
     .col-sm-6
-      h2 Nursing
+      h3 Health Services
+      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+      p
+        a.btn.btn-default(href='/healthservice', role='button') View details »
+    .col-sm-6
+      h3 Hairdressing
       p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
       p
         a.btn.btn-default(href='#', role='button') View details »
     .col-sm-6
-      h2 Hairdressing
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
-        a.btn.btn-default(href='#', role='button') View details »
-    .col-sm-6
-      h2 Plumbing
+      h3 Plumbing
       p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
       p
         a.btn.btn-default(href='#', role='button') View details »
