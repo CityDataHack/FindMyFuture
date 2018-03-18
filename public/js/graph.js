@@ -58,7 +58,7 @@ $(document).ready(function() {
 
 	//
 	var w = 800;
-	var h = 600;
+	var h = 700;
 	// var linkDistance=010;
 
 	//slider props
