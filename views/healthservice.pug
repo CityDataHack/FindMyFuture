@@ -10,7 +10,7 @@ block content
     hr
 
     .row
-        .col-sm-3
+        .col-sm-4
             h2 Priorities & Filters
             p Use the sliders in the left column to match your current situation, or how your situation could change.
             .slidecontainer
@@ -64,5 +64,23 @@ block content
                     option(value="IT") IT
                     option(value="Foreign Languages") Foreign Languages
 
-        .col-sm-9
+                .h4 Gender
+                select.optionpicker.mbs#interest3
+                    option(value="None Selected", selected) None Selected
+                    option(value="Male") Male
+                    option(value="Female") Female
+
+                .h4 Visa Required
+                select.optionpicker.mbs#interest3
+                    option(value="None Selected") None Selected
+                    option(value="Yes") Required
+                    option(value="No", selected) Not Required
+
+        .col-sm-8
+            .h2 Legend & Visualisation
+            div(style="background-color:#f5f5f5;padding:10px;border-radius:7px;")
+                div(style="color:green") GREEN: Affordable
+                div(style="color:red") RED: Expensive
+                div() LARGE: Interesting Difficulty
+                div() SMALL: Out of your comfort
             .graphvisuals(style="background-image:url('/rings.png'); background-position:center; background-position-x: 115px; background-repeat:no-repeat")
