@@ -32,6 +32,7 @@ $(document).ready(function() {
 
 
 	function getColorByScore(val) {
+		val = 100 - val;
 		var r, g, b;
 		if (val <= 50)
 		{
@@ -79,14 +80,16 @@ $(document).ready(function() {
 				sizeWeight:1.5,
 				colorWeight:1,
 				nodeDistance:200,
-				moneyCost:3000
+				moneyCost:3000,
+				minUcas:128
 			},
 			{
 				name:"Nurse",
 				sizeWeight:0.8,
 				colorWeight:1,
 				nodeDistance:200,
-				moneyCost:0
+				moneyCost:0,
+				minUcas:120
 			},
 			{
 				name:"Medical Writer",
@@ -94,7 +97,8 @@ $(document).ready(function() {
 				colorWeight:0.8,
 				distanceWeight:1.3,
 				nodeDistance:175,
-				moneyCost:10000
+				moneyCost:10000,
+				minUcas:120
 			},
 			{
 				name:"Medical Receptionist",
@@ -102,56 +106,64 @@ $(document).ready(function() {
 				colorWeight:0.8,
 				distanceWeight:1.4,
 				nodeDistance:100,
-				moneyCost:1000
+				moneyCost:1000,
+				minUcas:20
 			},
 			{
 				name:"Anesthesiologist",
 				sizeWeight:0.4,
 				colorWeight:0.9,
 				nodeDistance:245,
-				moneyCost:50000
+				moneyCost:50000,
+				minUcas:160
 			},
 			{
 				name:"Surgeon",
 				sizeWeight:0.5,
 				colorWeight:0.5,
 				nodeDistance:250,
-				moneyCost:75000
+				moneyCost:75000,
+				minUcas:160
 			},
 			{
 				name:"Radiologist",
 				sizeWeight:2.6,
 				colorWeight:0.4,
 				nodeDistance:200,
-				moneyCost:27000
+				moneyCost:27000,
+				minUcas:120
 			},
 			{
 				name:"Hospital Porter",
 				sizeWeight:3.8,
 				colorWeight:0.2,
 				nodeDistance:100,
-				moneyCost:100
+				moneyCost:100,
+				minUcas:0
 			},
 			{
 				name:"Sanitary Service Technician",
 				sizeWeight:0.1,
 				colorWeight:1.1,
 				nodeDistance:100,
-				moneyCost:0
+				moneyCost:0,
+				minUcas:10
 			},
 			{
 				name:"Paramedic",
 				sizeWeight:1.1,
 				colorWeight:1.4,
 				nodeDistance:235,
-				moneyCost:25000
+				moneyCost:25000,
+				minUcas:50
 			},
 			{
 				name:"General Practicioner",
 				sizeWeight:0.7,
 				colorWeight:1.7,
 				nodeDistance:235,
-				moneyCost:50000
+				moneyCost:50000,
+				minUcas:160
 			},
 			{
 				name:"YOU",
@@ -165,28 +177,32 @@ $(document).ready(function() {
 				sizeWeight:0.2,
 				colorWeight:0.1,
 				nodeDistance:200,
-				moneyCost:22500
+				moneyCost:22500,
+				minUcas:120
 			},
 			{
 				name:"Dentist",
 				sizeWeight:0.5,
 				colorWeight:0.1,
 				nodeDistance:240,
-				moneyCost:40000
+				moneyCost:40000,
+				minUcas:160
 			},
 			{
 				name:"Medical Researcher",
 				sizeWeight:0.8,
 				colorWeight:0.8,
 				nodeDistance:215,
-				moneyCost:30000
+				moneyCost:30000,
+				minUcas:120
 			},
 			{
 				name:"Phlebotomist",
 				sizeWeight:1.2,
 				colorWeight:0.6,
 				nodeDistance:150,
-				moneyCost:1000
+				moneyCost:1000,
+				minUcas:40
 			}
 		],
 		edges:[
@@ -253,7 +269,7 @@ $(document).ready(function() {
 			{
 				source:11,
 				target:15
-			},
+			}
 		]
 	};
 
@@ -264,6 +280,44 @@ $(document).ready(function() {
 			return [node.target["nodeDistance"]]
 		}
 		return [distanceDefault]
+	};
+
+	var calculateColor = function(node) {
+		if ("colorOverride" in node) {
+			return node["colorOverride"];
+		}
+
+		if ("moneyCost" in node) {
+			var minBound = 0;
+			var maxBound = 100000;
+			var score = 0 + Math.min(100,(slider1.value / node["moneyCost"]) * 100);
+			return getColorByScore(score);
+		}
+
+		//consider: moneyCost (0 to 100000)
+		if ("colorWeight" in node) {
+			return getColorByScore(node["colorWeight"] * colorPriority * slider3.value);
+		}
+
+		return colors(i);
+	};
+	var calculateSize = function(node) {
+		//minUcas
+		if ("minUcas" in node) {
+			var minUcas = node["minUcas"];
+			var score = sizeDefault;
+			if (slider2.value > minUcas) {
+				score += Math.min(30, (slider2.value-minUcas));
+
+				if (slider2.value - minUcas > 75) {
+					score -= Math.min(30, (slider2.value-minUcas-75));
+				}
+			}
+			return score;
+
+			// return node["minUcas"] * sizePriority * sizeDefault;
+		}
+		return sizeDefault;
 	};
 
 	var force = d3.layout.force()
@@ -286,12 +340,6 @@ $(document).ready(function() {
 		.style("stroke","#BBB")
 		.style("pointer-events", "none");
 
-	var calculateSize = function(node) {
-		if ("sizeWeight" in node) {
-			return node["sizeWeight"] * sizePriority * sizeDefault;
-		}
-		return sizeDefault;
-	};
 
 	var nodes = svg.selectAll("circle")
 		.data(dataset.nodes)
@@ -307,10 +355,11 @@ $(document).ready(function() {
 		.attr({"stroke":"#555"})
 		.attr({"stroke-width":"1"})
 		.style("fill",function(d,i){
-			if ("colorWeight" in d) {
-				return getColorByScore(d["colorWeight"] * colorPriority * slider3.value);
-			}
-			return colors(i);
+			return calculateColor(d);
+			// if ("colorWeight" in d) {
+			// 	return getColorByScore(d["colorWeight"] * colorPriority * slider3.value);
+			// }
+			// return colors(i);
 		})
 		.call(force.drag)
 
@@ -354,19 +403,6 @@ $(document).ready(function() {
 		.attr('d', 'M 0,-5 L 10 ,0 L 0,5')
 		.attr('fill', '#ccc')
 		.attr('stroke','#ccc');
-
-	var calculateColor = function(node) {
-		if ("colorOverride" in node) {
-			return node["colorOverride"];
-		}
-
-		//consider: moneyCost (0 to 100000)
-		if ("colorWeight" in node) {
-			return getColorByScore(node["colorWeight"] * colorPriority * slider3.value);
-		}
-
-		return colors(i);
-	};
 
 	force.on("tick", function(){
 		edges.attr({

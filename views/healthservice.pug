@@ -14,31 +14,55 @@ block content
             h2 Priorities & Filters
             p Use the sliders in the left column to match your current situation, or how your situation could change.
             .slidecontainer
-                .h4.mts Money to Spend
+                .h4.mts Money to Spend [GBP]
                     span#spiderSpan1
                 input.slider.mbs#slider1(type="range" min="0" max="50000" value="10000")
 
                 .h4 UCAS Points
                     span#spiderSpan2
-                input.slider.mbs#slider2(type="range" min="72" max="144" value="50")
+                input.slider.mbs#slider2(type="range" min="0" max="240" value="80")
 
-                .h4 Feature 3
+                .h4 Salary [GBP]
                     span#spiderSpan3
-                input.slider.mbs#slider3(type="range" min="1" max="100" value="50")
+                input.slider.mbs#slider3(type="range" min="0" max="200000" value="26000")
 
-                .h4 Feature 4
+                .h4 Sociability [%]
                     span#spiderSpan4
-                input.slider.mbs#slider4(type="range" min="1" max="100" value="50")
+                input.slider.mbs#slider4(type="range" min="0" max="100" value="50")
 
-                .h4 Feature 5
+                .h4 Job Satisfaction [1 to 10]
                     span#spiderSpan5
-                input.slider.mbs#slider5(type="range" min="1" max="100" value="50")
+                input.slider.mbs#slider5(type="range" min="1" max="10" value="8")
 
-                .h4 Feature 6
-                select.optionpicker.mbs
-                    option(value="aa") aa
-                    option(value="bb") bb
-                    option(value="cc") cc
+                .h4 Subject Interest Priority #1
+                select.optionpicker.mbs#interest1
+                    option(value="None Selected", selected) None Selected
+                    option(value="Biology") Biology
+                    option(value="Chemistry") Chemistry
+                    option(value="Maths") Maths
+                    option(value="English") English
+                    option(value="IT") IT
+                    option(value="Foreign Languages") Foreign Languages
+
+                .h4 Subject Interest Priority #2
+                select.optionpicker.mbs#interest2
+                    option(value="None Selected", selected) None Selected
+                    option(value="Biology") Biology
+                    option(value="Chemistry") Chemistry
+                    option(value="Maths") Maths
+                    option(value="English") English
+                    option(value="IT") IT
+                    option(value="Foreign Languages") Foreign Languages
+
+                .h4 Subject Interest Priority #3
+                select.optionpicker.mbs#interest3
+                    option(value="None Selected", selected) None Selected
+                    option(value="Biology") Biology
+                    option(value="Chemistry") Chemistry
+                    option(value="Maths") Maths
+                    option(value="English") English
+                    option(value="IT") IT
+                    option(value="Foreign Languages") Foreign Languages
 
         .col-sm-9
             .graphvisuals(style="background-image:url('/rings.png'); background-position:center; background-position-x: 115px; background-repeat:no-repeat")
