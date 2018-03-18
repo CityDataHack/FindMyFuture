@@ -1,6 +1,14 @@
 # FindMyFuture
 CityDataHack March 2018
 
+## Summary
+1) Setup
+2) Technologies
+3) Team Members
+4) Show Case
+5) Market Research
+6) Tombolo Digital Connector & Visualisation
+
 ## Setup
 
 1) Run `npm install` to install dependencies
@@ -14,6 +22,11 @@ CityDataHack March 2018
 - [NodeJS](https://nodejs.org/en/) for backend server
 - [D3JS](https://d3js.org/) for data visualisation
 
+## Team Members
+- Teun
+- Shanjida
+- Allan
+- Lubaina
 
 ## ShowCase
 
@@ -45,3 +58,18 @@ CityDataHack March 2018
 ### Server Health & Status Page
 
 ![Server Status](https://i.gyazo.com/789ad081b1cf4476ca0f49e614d6f8e1.gif)
+
+
+---
+
+## Market Research
+
+![Question 1 Results](https://i.gyazo.com/627ba466e64a3824366463f8743776ff.png)
+
+![Question 4 Results](https://i.gyazo.com/0de5f0623aa8c33d46d123ad90e0bb85.png)
+
+![Question 5 Results](https://i.gyazo.com/5b5d9abd196d55ebfa93a9b90320d109.png)
+
+![Question 6 Results](https://i.gyazo.com/e2e257171da0756e60aba94428fa024b.png)
+
+![Question 7 Results](https://i.gyazo.com/9c9572895b979f934f91a6d746982330.png)
